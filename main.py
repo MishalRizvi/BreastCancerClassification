@@ -140,13 +140,20 @@ def predict_benign_or_malignant(input_data):
         return 'The tumor is Benign'
 
 
-print("\nTesting predictions on first 5 samples:")
-for i in range(5):
+correct_predictions = 0
+for i in range(X_test.shape[0]):
     sample_data = X_test.iloc[i].values
     print(f"\nSample {i+1}:")
-    print("Prediction:", predict_benign_or_malignant(sample_data))
+    predicted_value = predict_benign_or_malignant(sample_data)
+    print("Prediction:", predicted_value)
     print("Actual value:", "Malignant" if Y_test.iloc[i] == 0 else "Benign")
     print("-" * 50)
+    if (predicted_value == "The tumor is Malignant" and Y_test.iloc[i] == 0):
+        correct_predictions += 1
+    elif (predicted_value == "The tumor is Benign" and Y_test.iloc[i] == 1):
+        correct_predictions += 1
+
+print(f"Accuracy: {correct_predictions / X_test.shape[0] * 100:.2f}%")
 
 """1 --> Benign
 
